@@ -26,14 +26,18 @@ let country, fullName;
     return;
   }
 
-  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-  const prompt = `Please split a ${country} full name: ${fullName} into first and last names and add translit in latin letters. If it contain middle name please add it into result as well. Output please in JSON format`;
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const prompt = `Please split a ${country} full name: ${fullName} into first and last names and add translit in latin letters. If it contain middle name please add it into result as well. Output please in JSON format`;
 
-  const result = await model.generateContent(prompt);
-  const response = result.response;
-  const text = response.text();
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
 
-  console.log(text);
+    console.log(text);
+  } catch (error) {
+    console.error(error.message || 'Error during processing Gemini request');
+  }
 }
 
 run();
